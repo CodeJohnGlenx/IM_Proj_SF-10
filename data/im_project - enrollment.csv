@@ -1,0 +1,44 @@
+student_id,school_year,entrance_date,school_attended,division,level_section,days_present,final_grade,action_taken
+1,2017,2017-06-05,The Great Glen Learning Academy,Quezon City,Nursery - Apple,195,86,Promoted to Kinder
+1,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,189,89,Promoted to Grade One
+2,2018,2017-06-13,The Great Glen Learning Academy,Malabon City,Nursery - Apple,194,91,Promoted to Kinder
+2,2021,2021-06-07,The Great Glen Learning Academy,Malabon City,Kinder - Mango,187,90,Promoted to Grade One
+3,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Kinder - Mango,198,92,Promoted to Grade One
+4,2017,2017-06-05,The Great Glen Learning Academy,Quezon City,Nursery - Apple,194,89,Promoted to Kinder
+4,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,165,70,Failed
+5,2021,2021-06-07,The Great Glen Learning Academy,Malabon City,Kinder - Mango,190,94,Promoted to Grade One
+6,2017,2017-06-05,The Great Glen Learning Academy,Quezon City,Kinder - Mango,190,93,Promoted to Grade One
+7,2016,2016-06-06,The Great Glen Learning Academy,Malabon City,Nursery - Apple,189,88,Promoted to Kinder
+7,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Kinder - Mango,183,87,Promoted to Grade One
+8,2020,2020-06-01,The Great Glen Learning Academy,Malabon City,Kinder - Mango,185,91,Promoted to Grade One
+9,2019,2019-06-03,The Great Glen Learning Academy,Quezon City,Kinder - Mango,192,90,Promoted to Grade One
+10,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Nursery - Apple,192,90,Promoted to Kinder
+10,2020,2020-06-01,The Great Glen Learning Academy,Malabon City,Kinder - Mango,185,88,Promoted to Grade One
+11,2017,2017-06-05,The Great Glen Learning Academy,Malabon City,Kinder - Mango,188,89,Promoted to Grade One
+12,2014,2014-06-02,The Great Glen Learning Academy,Quezon City,Nursery - Apple,189,90,Promoted to Kinder
+12,2016,2016-06-06,The Great Glen Learning Academy,Quezon City,Kinder - Mango,185,92,Promoted to Grade One
+13,2017,2017-06-05,The Great Glen Learning Academy,Malabon City,Kinder - Mango,109,,Dropped
+14,2018,2018-06-09,The Great Glen Learning Academy,Quezon City,Kinder - Mango,110,,Dropped
+15,2018,2018-06-09,The Great Glen Learning Academy,Quezon City,Nursery - Apple,193,91,Promoted to Kinder
+15,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,195,98,Promoted to Grade One
+16,2017,2017-06-05,The Great Glen Learning Academy,Malabon City,Kinder - Mango,197,95,Promoted to Grade One
+17,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Kinder - Mango,194,92,Promoted to Grade One
+18,2018,2018-06-09,The Great Glen Learning Academy,Quezon City,Nursery - Apple,190,90,Promoted to Kinder
+18,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,191,93,Promoted to Grade One
+19,2019,2019-06-03,The Great Glen Learning Academy,Malabon City,Kinder - Mango,102,,Dropped
+20,2016,2016-06-06,The Great Glen Learning Academy,Quezon City,Nursery - Apple,197,96,Promoted to Kinder
+20,2018,2018-06-09,The Great Glen Learning Academy,Quezon City,Kinder - Mango,187,90,Promoted to Grade One
+21,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,106,,Dropped
+22,2017,2017-06-05,The Great Glen Learning Academy,Quezon City,Nursery - Apple,191,91,Promoted to Kinder
+22,2019,2019-06-03,The Great Glen Learning Academy,Quezon City,Kinder - Mango,192,93,Promoted to Grade One
+23,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Kinder - Mango,101,,Dropped
+24,2019,2019-06-03,The Great Glen Learning Academy,Quezon City,Kinder - Mango,190,90,Promoted to Grade One
+25,2019,2019-06-03,The Great Glen Learning Academy,Malabon City,Kinder - Mango,170,72,Failed
+26,2016,2016-06-06,The Great Glen Learning Academy,Malabon City,Nursery - Apple,194,94,Promoted to Kinder
+26,2018,2018-06-09,The Great Glen Learning Academy,Malabon City,Kinder - Mango,191,90,Promoted to Grade One
+27,2017,2017-06-05,The Great Glen Learning Academy,Quezon City,Kinder - Mango,195,93,Promoted to Grade One
+28,2018,2018-06-09,The Great Glen Learning Academy,Quezon City,Nursery - Apple,185,87,Promoted to Kinder
+28,2020,2020-06-01,The Great Glen Learning Academy,Quezon City,Kinder - Mango,186,88,Promoted to Grade One
+29,2017,2017-06-05,The Great Glen Learning Academy,Malabon City,Nursery - Apple,189,90,Promoted to Kinder
+29,2019,2019-06-03,The Great Glen Learning Academy,Malabon City,Kinder - Mango,187,85,Promoted to Grade One
+30,2020,2020-06-01,The Great Glen Learning Academy,Malabon City,Kinder - Mango,102,,Dropped

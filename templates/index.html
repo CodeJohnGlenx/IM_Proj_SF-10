@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SF-10 Form Home Page</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Material icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    {% if css_js == 'index' %}
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" />
+    <!-- script -->
+    <script src="{{url_for('static', filename='js/index.js')}}" defer></script>
+    {% elif css_js == 'sf10' %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/sf10.css')}}" />
+    <!-- script -->
+    <script src="{{url_for('static', filename='js/sf10.js')}}" defer></script>
+    {% endif %}
+  </head>
+  <body>
+    <div class="container mt-5">
+      <a href="{{url_for('home_page')}}" class="title-header">
+      <h1>The Great Glen Learning Academy</h1>
+      <h4 class="fw-light">Preschool SF-10 Form</h2>
+      </a>
+    </div>
+    <div class="container">
+      {% if msg %}
+      <div class="alert alert-{{alert_color}} alert-dismissible fade show" role="alert">
+        {{msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+    </div>
+    <div class="container centered">
+      <form action="{{url_for('search_page')}}" method="get">
+        <div class="row mb-3">
+          <div class="col-3">
+            <div class="input-group">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Search by</label
+              >
+              <select
+                class="form-select input-search-by"
+                id="inputGroupSelect01"
+                name="search_column"
+              >
+                <option value="student_id" selected>student ID</option>
+                <option value="student_name">student name</option>
+                <option value="lrn">lrn</option>
+                <option value="address">address</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="input-group">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Sort</label
+              >
+              <select
+                class="form-select input-order-by"
+                id="inputGroupSelect02"
+                name="order_by"
+              >
+                <option value="ASC" selected>ascending</option>
+                <option value="DESC">descending</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="input-group mb-3">
+              <input
+                name="search_value"
+                type="text"
+                class="form-control input-search"
+                placeholder="search..."
+                aria-label="search input"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn btn-success btn-submit"
+                type="submit"
+                id="button-addon2"
+              >
+                <span class="material-icons fw-bold">search</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div>
+        <hr />
+        <div class="row">
+          <div class="col-3">
+            <a href="{{url_for('sf10_page', option='create')}}">
+              <button class="btn btn-success">Add Personal Student Record</button>
+            </a>
+          </div>
+
+          <div class="col-3">
+            <form action="{{url_for('check_student_id', option='edit_student_record')}}" method="POST">
+              <input type="number" class="edit-student-record-id invisible" name="student_id">
+              <input class="reset-session invisible" type="text" value="True" name="reset_session">
+              <button type="submit" class="btn btn-warning btn-edit-student-record">Edit Personal Student Record</button>
+          </form>
+          </div>
+
+          <div class="col-3">
+            <form action="{{url_for('enrollment_page', option='create')}}" method="POST">
+              <input class="reset-session invisible" type="text" value="True" name="reset_session">
+              <button type="submit" class="btn btn-success">Add Student Enrollment Record</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

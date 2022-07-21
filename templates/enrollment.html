@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SF-10 Form Home Page</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Material icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/enrollment.css')}}">
+
+    <!-- JS -->
+    <script src="{{url_for('static', filename='js/enrollment.js')}}" defer></script>
+  </head>
+  <body>
+    <div class="container mt-5">
+        <a href="{{url_for('home_page')}}" class="title-header">
+        <h1>The Great Glen Learning Academy</h1>
+        <h4 class="fw-light">Preschool SF-10 Form</h2>
+        </a>
+    </div>
+
+    <div class="container mb-4">
+        {% if 'errors' in session %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h4 class="alert-heading">Oops! Something is wrong.</h2>
+            <ul>
+                {% for e in session['errors'] %}
+                <li>{{e}}</li>
+                {% endfor %}
+            </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+      <h4 class="mt-5 mb-3">Enrollment Information</h4>
+        <form action="{{url_for('insert_enrollment_record')}}" method="POST">
+            <!-- Student ID -->
+            <div class="row mb-3">
+                <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-lrn"
+                      >Student ID<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <input
+                      id="input-student-id"
+                      type="number"
+                      class="form-control"
+                      aria-label="student id"
+                      name="student_id"
+                      min="1"
+                      value="{{session['student_id']}}"
+                      required
+                    />
+                </div>
+            </div>
+
+            <!-- Entrance Date -->
+            <div class="mb-5">
+                <div class="row mb-3">
+                  <div class="col-3">
+                    <label class="mb-1 fw-light" for="input-entrance-date"
+                      >Entrance Date<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <input
+                      id="input-entrance-date"
+                      type="date"
+                      class="form-control"
+                      aria-label="entrance date"
+                      name="entrance_date"
+                      min="2002-01-01"
+                      max = "2022-7-18"
+                      required
+                      value="{{session['entrance_date']}}"
+                    />
+                  </div>
+                  <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-school-year">School Year</label>
+                    <input
+                      id="input-school-year"
+                      type="text"
+                      class="form-control"
+                      placeholder="2017-2018"
+                      aria-label="school year"
+                      name="school_year"
+                      value="{{session['school_year']}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+          
+                <!-- School Attended, Division, Region, District -->
+                <div class="row mb-3">
+                  <!-- School Attended -->
+                  <div class="col">
+                    <label class="mb-1 fw-light" for="input-school-year">School Attended</label>
+                    <input
+                      id="input-school-attended"
+                      type="text"
+                      class="form-control"
+                      placeholder="The Great Glen Learning Academy"
+                      aria-label="school attended"
+                      name="school_attended"
+                      value="The Great Glen Learning Academy"
+                      readonly
+                    />
+                  </div>
+          
+                  <!-- Division -->
+                  <div class="col-3">
+                    <label class="mb-1 fw-light" for="input-division"
+                      >Division<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <select
+                      id="input-division"
+                      class="form-select"
+                      aria-label="division"
+                      name="division"
+                      _value="{{session['division']}}"
+                    >
+                      <option value="Malabon City" {{selected}}>Malabon City</option>
+                      <option value="Quezon City">Quezon City</option>
+                    </select>
+                  </div>
+          
+                  <!-- Region -->
+                  <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-region">Region</label>
+                    <input
+                      id="input-region"
+                      type="text"
+                      class="form-control"
+                      placeholder="NCR"
+                      aria-label="region"
+                      name="region"
+                      value="{{session['region']}}"
+                      readonly
+                    />
+                  </div>
+                  
+                  <!-- District -->
+                  <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-district"
+                      >District</label
+                    >
+                    <input
+                      id="input-district"
+                      type="number"
+                      class="form-control"
+                      aria-label="district"
+                      placeholder="3"
+                      name="district"
+                      value="{{session['district']}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+          
+                <!-- Level Section, Days Present Final Grade, Action Taken -->
+                <div class="row mb">
+                  <div class="col-3">
+                    <label class="mb-1 fw-light" for="input-level-section"
+                      >Level and Section<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <select
+                      id="input-level-section"
+                      class="form-select"
+                      aria-label="Level and Section"
+                      name="level_section"
+                      _value="{{session['level_section']}}"
+                    >
+                      <option value="Nursery - Apple">Nursery - Apple</option>
+                      <option value="Kinder - Mango">Kinder - Mango</option>
+                    </select>
+                  </div>
+          
+                  <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-days-present"
+                      >Days Present<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <input
+                      id="input-days-present"
+                      type="number"
+                      class="form-control"
+                      aria-label="days present"
+                      placeholder="200"
+                      name="days_present"
+                      min="0"
+                      max="220"
+                      value="{{session['days_present']}}"
+                      required
+                    />
+                  </div>
+          
+                  <div class="col-2">
+                    <label class="mb-1 fw-light" for="input-final-grade"
+                      >Final Grade<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <input
+                      id="input-final-grade"
+                      type="number"
+                      class="form-control"
+                      aria-label="final grade"
+                      placeholder="95"
+                      name="final_grade"
+                      min="0"
+                      max="99"
+                      value="{{session['final_grade']}}"
+                      required
+                    />
+                  </div>
+          
+                  <div class="col-3">
+                    <label class="mb-1 fw-light" for="input-action-taken"
+                      >Action Taken<span class="text-danger"><sup>*</sup></span></label
+                    >
+                    <select
+                      id="input-action-taken"
+                      class="form-select"
+                      aria-label="action taken"
+                      name="action_taken"
+                      _value="{{session['action_taken']}}"
+          
+                    >
+                      <option value="Promoted to Kinder">Promoted to Kinder</option>
+                      <option value="Promoted to Grade One">Promoted to Grade One</option>
+                      <option value="Failed">Failed</option>
+                      <option value="Dropped">Dropped</option>
+                    </select>
+                  </div>
+                  
+                </div>
+              </div>
+            <button type="submit" class="btn btn-submit btn-success">Submit</button>
+        </form>
+    </div>
+  </body>
+</html>

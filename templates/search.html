@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SF-10 Form Search</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Material icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/search.css') }}">
+
+  <!-- script -->
+  <script src="../static/js/search.js" defer></script>
+
+  <body>
+    <div class="container mt-4 mb-5">
+      <a href="{{url_for('home_page')}}" class="title-header">
+      <h1>The Great Glen Learning Academy</h1>
+      <h4 class="fw-light">Preschool SF-10 Form</h2>
+      </a>
+    </div>
+    <div class="container">
+      {% for r in result: %}
+      <div class="row d-flex align-items-end">
+        <div class="col-2">
+          <label for="" class="mb-2 fw-light">Student ID</label>
+          <input class="form-control" type="text" value="{{r[0]}}" readonly />
+        </div>
+        <div class="col-2">
+          <label for="" class="mb-2 fw-light">LRN</label>
+          <input class="form-control" type="text" value="{{r[1]}}" readonly />
+        </div>
+        <div class="col-3">
+          <label for="" class="mb-2 fw-light">Student Name</label>
+          <input class="form-control" type="text" value="{{r[2]}}" readonly />
+        </div>
+        <div class="col-4">
+          <label for="" class="mb-2 fw-light">Address</label>
+          <input class="form-control" type="text" value="{{r[3]}}" readonly />
+        </div>
+        <div class="btn-group col-1" role="group" aria-label="Basic example">
+          <a href="{{url_for('sf10_page', option='read', student_id=r[0])}}">
+            <button type="button" class="btn btn-primary material-icons">
+              visibility
+            </button>
+          </a>
+
+          <a href="{{url_for('delete_student_record', student_id=r[0])}}">
+            <button
+              type="button"
+              class="btn btn-danger material-icons btn-delete"
+              student_id="{{r[0]}}"
+            >
+              delete
+            </button>
+          </a>
+        </div>
+        <hr class="mt-4" />
+      </div>
+      {% endfor %}
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let clientHeight = document.querySelector(".form-control").clientHeight;
+      let btnGroup = document.querySelectorAll(".btn-group");
+      for (let i = 0; i < btnGroup.length; i++) {
+        btnGroup[i].style.height = clientHeight + "px";
+      }
+    </script>
+  </body>
+</html>

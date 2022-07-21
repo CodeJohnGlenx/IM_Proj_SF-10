@@ -1,0 +1,12 @@
+body {
+    background-color: #FEF9E7;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.title-header:hover {
+    color: #ffc107;
+}

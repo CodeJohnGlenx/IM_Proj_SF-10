@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SF10-Form</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/sf10.css') }}"
+    />
+
+    <!-- Script -->
+    <script src="{{ url_for('static',filename='js/sf10.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="container mt-4 mb-5">
+      <a href="{{url_for('home_page')}}" class="title-header">
+      <h1>The Great Glen Learning Academy</h1>
+      <h4 class="fw-light">Preschool SF-10 Form</h2>
+      </a>
+    </div>
+    <div class="container">
+      {% if errors %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Oops! Something is wrong.</h2>
+        <ul>
+          {% for e in errors %}
+          <li>{{e}}</li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+
+      <h4 class="mb-3">Personal Information</h4>
+      {% if option == 'READ' %}
+      <form action="">
+      {% elif option == 'CREATE'%}
+      <form action="{{url_for('home_page')}}" method="POST">
+      {% elif option == 'EDIT' %}
+      <form action="{{url_for('validate_student_record', option='edit')}}" method="POST">
+      {% endif %}
+        <!-- Student ID, LRN -->
+        <div class="row mb-3">
+          <div class="col-4">
+            <label class="mb-1 fw-light" for="input-lrn"
+              >Student ID</label
+            >
+            <input
+              id="input-student-id"
+              type="number"
+              class="form-control"
+              aria-label="student id"
+              name="student_id"
+              value="{{student_info['student_id']}}"
+              readonly
+            />
+          </div>
+          <div class="col-4">
+            <label class="mb-1 fw-light" for="input-lrn"
+              >Learner's Reference Number</label
+            >
+            <input
+              id="input-lrn"
+              type="number"
+              class="form-control"
+              placeholder="XXXXXXYYZZZZ"
+              aria-label="Learner's reference number"
+              name="lrn"
+              value="{{student_info['lrn']}}"
+            />
+          </div>
+        </div>
+
+        <!-- surname, first_name, middle_name -->
+        <div class="row mb-3">
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-surname"
+              >Surname<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-surname"
+              type="text"
+              class="form-control"
+              placeholder="De Los Santos"
+              aria-label="Last name"
+              name="surname"
+              value="{{student_info['surname']}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-firstname"
+              >First Name<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-firstname"
+              type="text"
+              class="form-control"
+              placeholder="Maria Clara"
+              aria-label="First name"
+              name="first_name"
+              value="{{student_info['first_name']}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-middlename"
+              >Middle Name<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-middlename"
+              type="text"
+              class="form-control"
+              placeholder="Alba"
+              aria-label="Middle name"
+              name="middle_name"
+              value="{{student_info['middle_name']}}"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- birthdate, birthplace, gender -->
+        <div class="row mb-3">
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-birthdate"
+              >Birthdate<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-birthdate"
+              type="date"
+              class="form-control"
+              aria-label="birthdate"
+              name="birth_date"
+              value="{{student_info['birth_date']}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-birthplace"
+              >Birthplace<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-birthplace"
+              type="text"
+              class="form-control"
+              placeholder="San Diego"
+              aria-label="birthplace"
+              name="birth_place"
+              value="{{student_info['birth_place']}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-gender"
+              >Gender<span class="text-danger"><sup>*</sup></span></label
+            >
+            <select
+              id="input-gender"
+              class="form-select"
+              aria-label="Default select example"
+              name="gender"
+              _value="{{student_info['gender']}}"
+            >
+              <option value="F">Female</option>
+              <option value="M">Male</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- nationality, religion -->
+        <div class="row mb-3">
+          <div class="col-4">
+            <label class="mb-1 fw-light" for="input-nationality"
+              >Nationality<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-nationality"
+              type="text"
+              class="form-control"
+              placeholder="Filipino"
+              aria-label="nationality"
+              name="nationality"
+              value="{{student_info['nationality']}}"
+              required
+            />
+          </div>
+          <div class="col-4">
+            <label class="mb-1 fw-light" for="input-religion">Religion </label>
+            <input
+              id="input-religion"
+              type="text"
+              class="form-control"
+              placeholder="Roman Catholic"
+              aria-label="religion"
+              name="religion"
+              value="{{student_info['religion']}}"
+            />
+          </div>
+        </div>
+
+        <!-- father's name, mother's name -->
+        <div class="row mb-3">
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-fathername"
+              >Father's Name
+            </label>
+            <input
+              id="input-fathername"
+              type="text"
+              class="form-control"
+              placeholder="De Los Santos, Santiago, Anluage"
+              aria-label="father's name"
+              name="father_name"
+              value="{{student_info['father_name']}}"
+            />
+          </div>
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-mothername"
+              >Mother's Name<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-mothername"
+              type="text"
+              class="form-control"
+              placeholder="De Los Santos, Pia, Alba"
+              aria-label="mother's name"
+              name="mother_name"
+              value="{{student_info['mother_name']}}"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="mb-1 fw-light" for="input-address"
+              >Address<span class="text-danger"><sup>*</sup></span></label
+            >
+            <input
+              id="input-address"
+              type="text"
+              class="form-control"
+              placeholder="Bayan ng San Diego"
+              aria-label="address"
+              name="address"
+              value="{{student_info['address']}}"
+              required
+            />
+          </div>
+        </div>
+        {% if option != 'READ' %}
+        <button type="submit" class="btn btn-submit btn-success mt-4">Submit</button>
+        {% endif %}
+      </form>
+      {% if option == 'READ' %}
+      <!-- Enrollment Information -->
+      {% if student_info['enroll_info'] %}
+      <h4 class="mt-5 mb-3">Enrollment Information</h4>
+      {% endif %}
+        {% for e_info in student_info['enroll_info'] %}
+        <!-- Entrance Date and School Year -->
+        <div class="mb-5">
+      <div class="row mb-3">
+        <div class="col-3">
+          <label class="mb-1 fw-light" for="input-entrance-date"
+            >Entrance Date<span class="text-danger"><sup>*</sup></span></label
+          >
+          <input
+            id="input-entrance-date"
+            type="date"
+            class="form-control"
+            aria-label="entrance date"
+            name="entrance_date"
+            required
+            value="{{e_info['entrance_date']}}"
+          />
+        </div>
+        <div class="col-2">
+          <label class="mb-1 fw-light" for="input-school-year">School Year</label>
+          <input
+            id="input-school-year"
+            type="text"
+            class="form-control"
+            placeholder="2017-2018"
+            aria-label="school year"
+            name="school_year"
+            value="{{e_info['school_year']}}-{{e_info['school_year'] + 1}}"
+          />
+        </div>
+      </div>
+
+      <!-- School Attended, Division, Region, District -->
+      <div class="row mb-3">
+        <!-- School Attended -->
+        <div class="col">
+          <label class="mb-1 fw-light" for="input-school-year">School Attended</label>
+          <input
+            id="input-school-attended"
+            type="text"
+            class="form-control"
+            placeholder="The Great Glen Learning Academy"
+            aria-label="school attended"
+            name="school_attended"
+            value="{{e_info['school_attended']}}"
+          />
+        </div>
+
+        <!-- Division -->
+        <div class="col-3">
+          <label class="mb-1 fw-light" for="input-division"
+            >Division<span class="text-danger"><sup>*</sup></span></label
+          >
+          <select
+            id="input-division"
+            class="form-select"
+            aria-label="division"
+            name="division"
+            _value="{{e_info['division']}}"
+          >
+            <option value="Malabon City">Malabon City</option>
+            <option value="Quezon City">Quezon City</option>
+          </select>
+        </div>
+
+        <!-- Region -->
+        <div class="col-2">
+          <label class="mb-1 fw-light" for="input-region">Region</label>
+          <input
+            id="input-region"
+            type="text"
+            class="form-control"
+            placeholder="NCR"
+            aria-label="region"
+            name="region"
+            value="{{e_info['region']}}"
+          />
+        </div>
+        
+        <!-- District -->
+        <div class="col-2">
+          <label class="mb-1 fw-light" for="input-district"
+            >District</label
+          >
+          <input
+            id="input-district"
+            type="number"
+            class="form-control"
+            aria-label="district"
+            placeholder="3"
+            name="district"
+            value="{{e_info['district']}}"
+            readonly
+          />
+        </div>
+      </div>
+
+      <!-- Level Section, Days Present Final Grade, Action Taken -->
+      <div class="row mb-3">
+        <div class="col-3">
+          <label class="mb-1 fw-light" for="input-level-section"
+            >Level and Section<span class="text-danger"><sup>*</sup></span></label
+          >
+          <select
+            id="input-level-section"
+            class="form-select"
+            aria-label="Level and Section"
+            name="level_section"
+            _value="{{e_info['level_section']}}"
+          >
+            <option value="Nursery - Apple">Nursery - Apple</option>
+            <option value="Kinder - Mango">Kinder - Mango</option>
+          </select>
+        </div>
+
+        <div class="col-2">
+          <label class="mb-1 fw-light" for="input-days-present"
+            >Days Present<span class="text-danger"><sup>*</sup></span></label
+          >
+          <input
+            id="input-days-present"
+            type="number"
+            class="form-control"
+            aria-label="days present"
+            placeholder="200"
+            name="days_present"
+            value="{{e_info['days_present']}}"
+          />
+        </div>
+
+        <div class="col-2">
+          <label class="mb-1 fw-light" for="input-final-grade"
+            >Final Grade<span class="text-danger"><sup>*</sup></span></label
+          >
+          <input
+            id="input-final-grade"
+            type="number"
+            class="form-control"
+            aria-label="final grade"
+            placeholder="95"
+            name="final_grade"
+            value="{{e_info['final_grade']}}"
+          />
+        </div>
+
+        <div class="col-3">
+          <label class="mb-1 fw-light" for="input-action-taken"
+            >Action Taken<span class="text-danger"><sup>*</sup></span></label
+          >
+          <select
+            id="input-action-taken"
+            class="form-select"
+            aria-label="action taken"
+            name="action_taken"
+            _value="{{e_info['action_taken']}}"
+
+          >
+            <option value="Promoted to Kinder">Promoted to Kinder</option>
+            <option value="Promoted to Grade One">Promoted to Grade One</option>
+            <option value="Failed">Failed</option>
+            <option value="Dropped">Dropped</option>
+          </select>
+        </div>
+        
+      </div>
+      <hr>
+    </div>
+        {% endfor %}
+      {% endif %}
+      <span class="result-data invisible" _value="{{student_info}}"></span>
+      <span class="option-data invisible">{{option}}</span>
+    </div>
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+body {
+    background-color: #FEF9E7;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.title-header:hover {
+    color: #ffc107;
+}
+
+.reset-session {
+    position: absolute;
+}
+
+.reset-session,
+.edit-student-record-id {
+    position: absolute;
+}
