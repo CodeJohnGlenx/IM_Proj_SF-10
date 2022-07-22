@@ -37,15 +37,13 @@
       <h4 class="fw-light">Preschool SF-10 Form</h2>
       </a>
     </div>
-    <div class="container">
+    <div class="container centered">
       {% if msg %}
       <div class="alert alert-{{alert_color}} alert-dismissible fade show" role="alert">
         {{msg}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       {% endif %}
-    </div>
-    <div class="container centered">
       <form action="{{url_for('search_page')}}" method="get">
         <div class="row mb-3">
           <div class="col-3">
@@ -128,7 +126,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-3">
             <form action="{{url_for('enrollment_page', option='create')}}" method="POST">
               <input class="reset-session invisible" type="text" value="True" name="reset_session">
@@ -140,6 +138,7 @@
             <form action="{{url_for('check_student_id', option='edit_enrollment_record')}}" method="POST">
               <input type="number" class="edit-enrollment-id invisible" name="student_id">
               <input type="number" class="edit-enrollment-school-year invisible" name="school_year">
+              <input class="reset-session invisible" type="text" value="True" name="reset_session">
               <button type="submit" class="btn btn-warning btn-edit-enrollment-record">Edit Student Enrollment Record</button>
           </form>
           </div>
@@ -150,6 +149,14 @@
               <input type="number" class="delete-enrollment-school-year invisible" name="school_year">
               <button type="submit" class="btn btn-danger btn-delete-enrollment-record">Delete Student Enrollment Record</button>
           </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+            <a href="{{url_for('charts_page')}}">
+              <button class="btn btn-primary">Supercool Charts!</button>
+            </a>
           </div>
         </div>
       </div>

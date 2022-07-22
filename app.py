@@ -322,6 +322,16 @@ def insert_enrollment_record():
 @app.route('/check_enrollment_input/<option>', methods=['GET', 'POST'])
 def check_student_id(option):
     if request.method == "POST":
+        # clear session data
+        session_keys = [key for key in session]
+        for key in session_keys:
+            session.pop(key, None)
+        
+        # store request.form to session
+        for key in request.form:
+            session[key] = request.form[key]
+
+
         if option == "edit_student_record":
             try: 
                 sql = f"""
@@ -550,6 +560,84 @@ def edit_enrollment_record():
             return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
     except Exception as e:
         return f"{e}"
+
+@app.route("/charts_page")
+def charts_page():
+    data = [1, 2, 5, 10, 3]
+    try:
+        sql = f"""
+        SELECT e.`school_year`, count(case s.`gender` when 'M' then 1 else null end), count(case s.`gender` when 'F' then 1 else null end), count(*)
+        FROM `student` s, `enrollment` e
+        WHERE s.`student_id` = e.`student_id`
+        GROUP BY e.`school_year`;
+        """
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        school_years = [sy[0] for sy in result]
+        male_data = [sy[1] for sy in result]
+        female_data = [sy[2] for sy in result]
+        all_data = [sy[3] for sy in result]
+
+        malabon_quezon = "(s.`address` LIKE '%malabon%' OR s.`address` LIKE '%quezon%')"
+        sql = f"""
+        SELECT e.`level_section`, avg(e.`final_grade`)
+        FROM `student` s, `enrollment` e
+        WHERE s.`student_id` = e.`student_id`  
+        AND e.`final_grade` >= 75
+        AND {malabon_quezon}
+        GROUP BY `level_section`;
+        """
+
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        
+        not_malabon_quezon = "(NOT s.`address` LIKE '%malabon%' OR NOT s.`address` LIKE '%quezon%')"
+        sql = f"""
+        SELECT e.`level_section`, avg(e.`final_grade`)
+        FROM `student` s, `enrollment` e
+        WHERE s.`student_id` = e.`student_id`  
+        AND e.`final_grade` >= 75
+        AND {not_malabon_quezon}
+        GROUP BY `level_section`;
+        """
+
+        cursor.execute(sql)
+        result = result + cursor.fetchall()
+
+        kinder_data = [round(float(ave[1]), 2) for ave in result if "Kinder" in ave[0]]
+        nursery_data = [round(float(ave[1]), 2) for ave in result if "Nursery" in ave[0]]
+
+
+        sql = f"""
+        SELECT e.`division`, e.`level_section`, s.`gender`, count(*) 
+        FROM `student` s, `enrollment` e 
+        WHERE s.`student_id` = e.`student_id`
+        GROUP BY e.`division`, e.`level_section`, s.`gender`
+        ORDER BY e.`division`, e.`level_section`, s.`gender`
+        """
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        print(result)
+        nursery_female = []
+        nursery_male = []
+        kinder_female = []
+        kinder_male = []
+        for r in result:
+            if 'Kinder' in r[1]:
+                if 'F' in r[2]:
+                    kinder_female.append(r[3])
+                else:
+                    kinder_male.append(r[3])
+            else:
+                if 'F' in r[2]:
+                    nursery_female.append(r[3])
+                else:
+                    nursery_male.append(r[3])
+
+    except Exception as e:
+        return f"{e}"
+
+    return render_template('charts.html', all_data=all_data, school_years=school_years, female_data=female_data, male_data=male_data, kinder_data=kinder_data, nursery_data=nursery_data, nursery_female=nursery_female, nursery_male=nursery_male, kinder_female=kinder_female, kinder_male=kinder_male)
     
     
 

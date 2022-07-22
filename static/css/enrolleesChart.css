@@ -1,0 +1,18 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.title-header:hover {
+    color: #ffc107;
+}
+
+body {
+    background-color: #FEF9E7;
+}
+
+canvas {
+    width: 75%;
+    display: block;
+    margin: auto;
+}
