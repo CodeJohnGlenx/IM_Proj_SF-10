@@ -46,7 +46,11 @@
         </div>
         {% endif %}
       <h4 class="mt-5 mb-3">Enrollment Information</h4>
+        {% if option == 'CREATE' %}
         <form action="{{url_for('insert_enrollment_record')}}" method="POST">
+        {% elif option == 'EDIT' %}
+        <form action="{{url_for('edit_enrollment_record')}}" method="POST">
+        {% endif %}
             <!-- Student ID -->
             <div class="row mb-3">
                 <div class="col-2">
@@ -82,7 +86,7 @@
                       min="2002-01-01"
                       max = "2022-7-18"
                       required
-                      value="{{session['entrance_date']}}"
+                      value = "{{session['entrance_date']}}"
                     />
                   </div>
                   <div class="col-2">
@@ -245,5 +249,6 @@
             <button type="submit" class="btn btn-submit btn-success">Submit</button>
         </form>
     </div>
+    <span class="option invisible">{{option}}</span>
   </body>
 </html>

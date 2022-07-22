@@ -24,6 +24,11 @@ a {
 }
 
 .reset-session,
-.edit-student-record-id {
+.edit-student-record-id,
+.edit-enrollment-id,
+.edit-enrollment-school-year,
+.delete-enrollment-id,
+.delete-enrollment-school-year,
+.delete-student-record-id {
     position: absolute;
 }

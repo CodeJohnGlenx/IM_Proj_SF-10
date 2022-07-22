@@ -11,7 +11,7 @@ db = mysql.connector.connect(
     user="root",
     database="im_proj"
 )
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -251,6 +251,7 @@ def enrollment_page(option):
             session_keys = [key for key in session]
             for key in session_keys:
                 session.pop(key, None)
+        
 
     return render_template('enrollment.html', option=option.upper())
 
@@ -318,6 +319,7 @@ def insert_enrollment_record():
 
 
 @app.route('/check_student_id/<option>', methods=['GET', 'POST'])
+@app.route('/check_enrollment_input/<option>', methods=['GET', 'POST'])
 def check_student_id(option):
     if request.method == "POST":
         if option == "edit_student_record":
@@ -340,7 +342,97 @@ def check_student_id(option):
                     return redirect(url_for('sf10_page', option="edit".upper(), student_id=student_id))
             except Exception as e:
                 print(e)
-    return "hmmmmm"
+        
+        elif option == "edit_enrollment_record":
+            try:         
+                sql = f"""
+                SELECT s.`student_id`, e.`entrance_date`, e.`school_year`,
+                e.`school_attended`, e.`division`, l.`region`, l.`district`, 
+                e.`level_section`, e.`days_present`, e.`final_grade`, e.`action_taken`
+                FROM `student` s, `enrollment` e, `location` l
+                WHERE s.`student_id` = e.`student_id`
+                AND s.`student_id` = {request.form['student_id']}
+                AND e.`school_year` = {request.form['school_year']}
+                """
+
+                cursor.execute(sql)
+                result = cursor.fetchone()
+                if not result:
+                    msg = f"Student ID: {request.form['student_id']} and School Year: {request.form['school_year']} record doesn't exist."
+                    alert_color = 'danger'
+                    return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
+                
+
+                session_keys = ['student_id', 'entrance_date', 'school_year', 'school_attended', 'division', 'region', 'district', 'level_section', 'days_present', 'final_grade', 'action_taken']
+                for i in range(len(session_keys)):
+                    session[session_keys[i]] = result[i]
+                    
+                session['entrance_date'] = datetime.strftime(result[1], "%Y-%m-%d")
+                return redirect(url_for('enrollment_page', option='edit'))
+            except Exception as e:
+                print(e)
+        
+        elif option == "delete_enrollment_record":
+            try:
+                sql = f"""
+                SELECT *
+                FROM  `student` s, `enrollment` e
+                WHERE s.`student_id` = e.`student_id`
+                AND s.`student_id` = {request.form['student_id']}
+                AND e.`school_year` = {request.form['school_year']}
+                """
+
+                cursor.execute(sql)
+                result = cursor.fetchone()
+                if not result:
+                    msg = f"Student ID: {request.form['student_id']} and School Year: {request.form['school_year']} record doesn't exist."
+                    alert_color = 'danger'
+                    return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
+        
+                sql = f"""
+                DELETE from `enrollment`
+                WHERE `student_id` = {request.form['student_id']}
+                AND `school_year` = {request.form['school_year']}
+                """
+                cursor.execute(sql)
+                db.commit()
+                msg = f"Student ID: {request.form['student_id']} School Year: {request.form['school_year']} deleted."
+                alert_color = 'warning'
+                return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
+            except Exception as e:
+                return f"{e}"
+
+        elif option == "delete_student_record":
+            try:
+                sql = f"""
+                SELECT * FROM `student`
+                WHERE `student_id` = {request.form['student_id']}
+                """
+                cursor.execute(sql)
+                result = cursor.fetchone()
+
+                if not result:
+                    msg = f"Student ID: {request.form['student_id']} doesn't exist."
+                    alert_color = 'danger'
+                    return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
+                
+                sql = f"""
+                DELETE FROM `student`
+                WHERE `student_id` = {request.form['student_id']}
+                """
+
+                cursor.execute(sql)
+                sql = f"""
+                DELETE FROM `enrollment`
+                WHERE `student_id` = {request.form['student_id']}
+                """
+        
+                cursor.execute(sql)
+                db.commit()
+                return render_template('index.html', css_js="index", msg=f"Student ID: {request.form['student_id']} record deleted.", alert_color='warning')
+            except Exception as e:
+                return f"{e}"
+    
 
 @app.route('/validate_student_record/<option>', methods=['GET', 'POST'])
 def validate_student_record(option):
@@ -429,4 +521,35 @@ def validate_student_record(option):
     except Exception as e:
         return f"{e}"
 
+
+
+
+@app.route('/edit_enrollment_record', methods=['GET', 'POST'])
+def edit_enrollment_record():
+    try:
+        if request.method == 'POST':
+            print(request.form)
+            # insert enrollment record 
+            school_year = request.form['school_year'].split('-')[0]
+
+            sql = f"""UPDATE `enrollment`
+            SET `entrance_date` = '{request.form['entrance_date']}',
+            `division` = '{request.form['division']}',
+            `level_section` = '{request.form['level_section']}',
+            `days_present` = {request.form['days_present']},
+            `final_grade` = {request.form['final_grade']},
+            `action_taken` = '{request.form['action_taken']}'
+            WHERE `student_id` = {request.form['student_id']}
+            AND `school_year` = {school_year}
+            """
+            cursor.execute(sql)
+            db.commit()
+
+            msg = f"Student ID: {request.form['student_id']} School Year {request.form['school_year']} record successfully updated."
+            alert_color = 'success'
+            return render_template('index.html', css_js="index", msg=msg, alert_color=alert_color)
+    except Exception as e:
+        return f"{e}"
+    
+    
 
